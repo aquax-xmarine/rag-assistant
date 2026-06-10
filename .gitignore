@@ -1,0 +1,49 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+*.log
+
+# Database Files
+*.db
+*.sqlite3
+
+# Qdrant Local Storage (if used)
+qdrant_storage/
+
+# Docker
+docker-compose.override.yml
+
+# Jupyter
+.ipynb_checkpoints/

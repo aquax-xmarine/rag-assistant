@@ -1,14 +1,15 @@
 from fastapi import FastAPI
+from app.core.config import settings
 
 app = FastAPI(
-    title="RAG Interview Assistant",
+    title=settings.app_name,
     version="1.0.0"
 )
 
 @app.get("/")
 async def root():
     return {
-        "message": "RAG Interview Assistant API"
+        "app": settings.app_name
     }
 
 

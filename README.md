@@ -43,7 +43,7 @@ User Input → Ollama → Extract Structured Data → PostgreSQL
 ## Setup Instructions
 ### 1. Clone repo
 ```bash
-git clone <repo-url>
+git clone <https://github.com/aquax-xmarine/rag-assistant.git>
 cd rag-assistant
 ```
 
@@ -89,6 +89,6 @@ uvicorn app.main:app --reload
 
 ## Access API
 API: http://127.0.0.1:8000
-Docs: http://127.0.0.1:8000/docs
+Swagger Docs: http://127.0.0.1:8000/docs
 
 ---

@@ -19,6 +19,14 @@ from app.services.chunking_service import (
     ChunkingService
 )
 
+from app.services.embedding_service import (
+    EmbeddingService
+)
+
+from app.services.vector_service import (
+    VectorService
+)
+
 router = APIRouter(
     prefix="/documents",
     tags=["Documents"]
@@ -94,10 +102,21 @@ async def upload_document(
 
     db.refresh(document)
 
+
+    embeddings = [
+        EmbeddingService.embed(chunk)
+        for chunk in chunks
+    ]
+
+    VectorService().store_chunks(
+        document.id,
+        chunks,
+        embeddings
+    )
+
     return {
         "document_id": document.id,
         "filename": document.filename,
         "chunk_strategy": chunk_strategy,
         "chunks_created": len(chunks),
-        "chunks": chunks
     }

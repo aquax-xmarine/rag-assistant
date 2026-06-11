@@ -20,6 +20,13 @@ app = FastAPI(
 
 app.include_router(document_router)
 
+from app.services.vector_service import (
+    VectorService
+)
+
+vector_service = VectorService()
+vector_service.create_collection()
+
 @app.get("/")
 async def root():
     return {

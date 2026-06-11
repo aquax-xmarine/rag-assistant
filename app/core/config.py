@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     qdrant_host: str
     qdrant_port: int
 
+    
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"

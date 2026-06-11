@@ -64,6 +64,7 @@ Create .env file in the root directory
 ```bash
 APP_NAME=RAG Interview Assistant
 
+# Replace the PostgreSQL password if different on your machine
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rag_assistant
 
 REDIS_HOST=localhost
@@ -71,6 +72,8 @@ REDIS_PORT=6379
 
 QDRANT_HOST=localhost
 QDRANT_PORT=6333
+
+
 ```
 
 ---  
@@ -80,7 +83,25 @@ QDRANT_PORT=6333
 docker compose up -d redis qdrant postgres
 ```
 
-### 6. Run FastAPI server
+### 6. Install Ollama
+Install Ollama and pull the required model:
+
+```bash
+ollama pull llama3:latest
+```
+
+Verify the model is available:
+```bash
+ollama list
+```
+
+Start Ollama:
+```bash
+ollama serve
+```
+
+
+### 7. Run FastAPI server
 ```bash
 uvicorn app.main:app --reload
 ```

@@ -2,7 +2,8 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Distance,
     VectorParams,
-    PointStruct
+    PointStruct,
+    Filter
 )
 
 from app.core.config import settings
@@ -68,3 +69,19 @@ class VectorService:
             collection_name=COLLECTION_NAME,
             points=points
         )
+
+
+    def search(
+        self,
+        query_vector: list[float],
+        limit: int = 5
+    ):
+
+        results = self.client.query_points(
+            collection_name=COLLECTION_NAME,
+            query=query_vector,
+            limit=limit
+        )
+
+        return results.points
+    

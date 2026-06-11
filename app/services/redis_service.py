@@ -51,3 +51,38 @@ class RedisService:
             f"chat:{session_id}",
             json.dumps(history)
         )
+
+    def save_booking_state(
+        self,
+        session_id: str,
+        state: dict
+    ):
+
+        self.client.set(
+            f"booking:{session_id}",
+            json.dumps(state)
+        )
+
+    def get_booking_state(
+        self,
+        session_id: str
+    ):
+
+        data = self.client.get(
+            f"booking:{session_id}"
+        )
+
+        if not data:
+            return None
+
+        return json.loads(data)
+    
+    def delete_booking_state(
+        self,
+        session_id: str
+    ):
+
+        self.client.delete(
+            f"booking:{session_id}"
+        )
+    

@@ -75,16 +75,6 @@ Answer using only the provided context.
 
         answer = response.json()["response"]
 
-        redis_service.save_message(
-            session_id,
-            "user",
-            query
-        )
-
-        redis_service.save_message(
-            session_id,
-            "assistant",
-            answer
-        )
+       
 
         return answer

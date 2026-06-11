@@ -43,7 +43,7 @@ User Input → Ollama → Extract Structured Data → PostgreSQL
 ## Setup Instructions
 ### 1. Clone repo
 ```bash
-git clone <https://github.com/aquax-xmarine/rag-assistant.git>
+git clone https://github.com/aquax-xmarine/rag-assistant.git
 cd rag-assistant
 ```
 

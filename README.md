@@ -64,7 +64,6 @@ Create .env file in the root directory
 ```bash
 APP_NAME=RAG Interview Assistant
 
-# Replace the PostgreSQL password if different on your machine
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rag_assistant
 
 REDIS_HOST=localhost

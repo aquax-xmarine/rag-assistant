@@ -1,5 +1,7 @@
 import os
 import fitz
+import hashlib
+
 
 from fastapi import (
     APIRouter,
@@ -58,6 +60,8 @@ def extract_text(path: str) -> str:
         "Unsupported file type"
     )
 
+def get_file_hash(file_bytes: bytes) -> str:
+    return hashlib.sha256(file_bytes).hexdigest()
 
 @router.post("/upload")
 async def upload_document(
@@ -71,10 +75,25 @@ async def upload_document(
         file.filename
     )
 
+    file_bytes = await file.read()
+
+    file_hash = get_file_hash(file_bytes)
+
+    # check duplicate (file + strategy)
+    existing_doc = db.query(Document).filter(
+        Document.file_hash == file_hash,
+        Document.chunk_strategy == chunk_strategy
+    ).first()
+
+    if existing_doc:
+        return {
+            "message": "Document already processed with same strategy",
+            "document_id": existing_doc.id
+        }
+
+    # save file after reading bytes
     with open(file_path, "wb") as buffer:
-        buffer.write(
-            await file.read()
-        )
+        buffer.write(file_bytes)
 
     text = extract_text(file_path)
 
@@ -93,7 +112,8 @@ async def upload_document(
 
     document = Document(
         filename=file.filename,
-        chunk_strategy=chunk_strategy
+        chunk_strategy=chunk_strategy,
+        file_hash=file_hash
     )
 
     db.add(document)
@@ -110,6 +130,8 @@ async def upload_document(
 
     VectorService().store_chunks(
         document.id,
+        file_hash,
+        chunk_strategy.value,
         chunks,
         embeddings
     )

@@ -29,6 +29,8 @@ class Document(Base):
         default=datetime.utcnow
     )
 
+    file_hash = Column(String, index=True)
+
 
 class InterviewBooking(Base):
     __tablename__ = "interview_bookings"
@@ -47,3 +49,5 @@ class InterviewBooking(Base):
         DateTime,
         default=datetime.utcnow
     )
+
+    

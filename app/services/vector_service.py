@@ -5,6 +5,7 @@ from qdrant_client.models import (
     PointStruct,
     Filter
 )
+import uuid
 
 from app.core.config import settings
 
@@ -44,6 +45,8 @@ class VectorService:
     def store_chunks(
         self,
         document_id: int,
+        file_hash: str,
+        chunk_strategy: str,
         chunks: list[str],
         embeddings: list[list[float]]
     ):
@@ -53,14 +56,22 @@ class VectorService:
         for idx, (chunk, vector) in enumerate(
             zip(chunks, embeddings)
         ):
-
+            
+            point_id = str(uuid.uuid5(
+                uuid.NAMESPACE_DNS,
+                f"{file_hash}_{chunk_strategy}_{idx}"
+            ))
+            
             points.append(
                 PointStruct(
-                    id=document_id * 10000 + idx,
+                    id=point_id,
                     vector=vector,
                     payload={
                         "document_id": document_id,
-                        "chunk_text": chunk
+                        "file_hash": file_hash,
+                        "chunk_strategy": chunk_strategy,
+                        "chunk_text": chunk,
+                        "chunk_index": idx
                     }
                 )
             )
@@ -82,6 +93,9 @@ class VectorService:
             query=query_vector,
             limit=limit
         )
+
+        for p in results.points:
+            print(p.score, p.payload["chunk_text"])
 
         return results.points
     

@@ -42,20 +42,26 @@ User Input → Ollama → Extract Structured Data → PostgreSQL
 
 ## Setup Instructions
 ### 1. Clone repo
+'''bash
 git clone <repo-url>
 cd rag-assistant
+'''
 
 ### 2. Create virtual environment
+'''bash
 python -m venv venv
 venv\Scripts\activate
+'''
 
 ### 3. Install dependencies
+'''bash
 pip install -r requirements.txt
+'''
 
 ### 4. Add environment variables
 Create .env file in the root directory
 
-
+'''bash
 APP_NAME=RAG Interview Assistant
 
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rag_assistant
@@ -65,13 +71,18 @@ REDIS_PORT=6379
 
 QDRANT_HOST=localhost
 QDRANT_PORT=6333
+'bash
 
 
 ### 5. Start infrastructure services (Docker)
+'''bash
 docker compose up -d redis qdrant postgres
+'''
 
 ### 6. Run FastAPI server
+'''bash
 uvicorn app.main:app --reload
+'''
 
 ---
 
